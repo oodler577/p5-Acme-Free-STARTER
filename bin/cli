@@ -1,0 +1,32 @@
+#!/usr/bin/env perl
+
+use v5.10;
+use strict;
+use warnings;
+
+use Dispatch::Fu;
+use Acme::Free::STARTER qw//;
+use Util::H2O::More     qw/ddd Getopt2h2o o2d/;
+
+use constant {
+    EXIT_SUCCESS => 0,
+    EXIT_ERROR   => 1,
+};
+
+my $subcommand = shift @ARGV;
+my $fletch       = Acme::Free::Dog::API->new;
+
+#>>>
+dispatch {
+    xdefault shift, q{random};
+}
+$subcommand,
+  help      => sub { exit do_help() },
+;
+#<<<
+
+sub do_help {
+    warn "fletch! subcommand may be one of the following: 'help' (prints this!)\n";
+}
+
+__END__
